@@ -1,0 +1,5 @@
+with data as (
+
+select * ,lead(sold_num) over(partition by sale_date order by sale_date) as orange_num from Sale  )
+
+select sold_num-orange_num from data where orange_num is not null order by sale_date
