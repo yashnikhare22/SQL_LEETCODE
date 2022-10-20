@@ -1,0 +1,6 @@
+with data as(
+select *, (case when operation ='Sell' then price else (-1)*price end ) as cnt from Stocks
+)
+
+select stock_name,sum(cnt) over(partition by stock_name order by stock_name) as Profit_Loss 
+from data
