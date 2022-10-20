@@ -1,0 +1,15 @@
+with data1 as (
+
+select year,'Wimbledon' as championships,Wimbledon as player_id from Championships
+union 
+select year,'Fr_open' as championships,Fr_open as player_id from Championships
+union
+select year,'US_open' as championships,US_open as player_id from Championships
+union
+select year,'Au_open' as championships,Au_open as player_id from Championships
+),
+data2 as (
+select player_id,count(championships) as cnt from data1 group by player_id
+)
+
+select player_name,championships,cnt from Players P join data2 d2 on P.player_id=d2.player_id
