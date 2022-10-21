@@ -1,0 +1,13 @@
+with data1 as (
+
+select *,count(product_id) over(partition by customer_id,product_id order by customer_id) as cnt
+from Orders
+),
+data2 as (
+select * ,dens_rank() over(partition by customer_id,product_id order by cnt) as rnk from data1
+)
+
+select d2.product_id,c.product_name,d2.customer_id from data2 d2 join Customer c on d2.product_id=
+c.product_id where rnk=1
+
+
