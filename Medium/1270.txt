@@ -1,0 +1,7 @@
+with data as (
+select *
+from Employee e1 join Employee e2 on e1.manager_id=e2.employee_id
+join Employee e3 on e2.employee_id=e3.manager_id
+)
+
+select e1.employee_id from data where e3.manager_id=1 and e1.employee_id<>e1.manager_id
