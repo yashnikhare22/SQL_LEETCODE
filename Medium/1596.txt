@@ -7,7 +7,7 @@ data2 as (
 select * ,dense_rank() over(partition by customer_id order by cnt desc) as rnk from data1
 )
 
-select d2.product_id,c.product_name,d2.customer_id from data2 d2 join Customer c on d2.product_id=
+select distinct(d2.product_id),distinct(c.product_name),distinct(d2.customer_id) from data2 d2 join Customer c on d2.product_id=
 c.product_id where rnk=1
 
 
