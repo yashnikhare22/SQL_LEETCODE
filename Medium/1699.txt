@@ -1,0 +1,8 @@
+with data as (
+
+select case when from_id < to_id then from_id else to_id end as P1,
+case when from_id > to_id then to_id else from_id end as P2 ,
+duration
+from Calls  )
+
+select P1,P2,count(*) as call_count,duration from data group by P1,P2
