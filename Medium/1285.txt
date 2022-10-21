@@ -1,0 +1,7 @@
+with data as (
+select log_id,(row_number() over())-(log_id) as diff from Logs
+)
+
+select min(log_id) as start_id ,max(log_id) as end_id
+from data
+group by diff
