@@ -1,0 +1,4 @@
+
+select customer_id from Orders where (product_name='A' and product_name='B') and customer_id 
+not in
+(select customer_id from Orders where product_name='C')
