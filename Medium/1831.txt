@@ -1,0 +1,5 @@
+ with data as (
+ select *, rank() over(partition by day order by day) as rnk from Transcations
+ )
+ 
+ select transaction_id from data where rnk=1 order by transaction_id
