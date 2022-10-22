@@ -1,0 +1,9 @@
+with data as (
+select *,max(salary) over(partitiion by company_id order by company_id) as max_sal from Salaries
+)
+
+select employee_id, round((case when max_sal<1000 then salary,
+ when max_sal between 1000 and 10000 then (salary*0.76),
+ else (salary*0.51) end ),0)  as salary_after_tax
+from data
+
