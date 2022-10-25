@@ -1,0 +1,9 @@
+with data1 as (
+select * ,(case when action='confirmed' then 1 else 0 end) as cnf from Confirmations
+),
+data2 as (
+select *,sum(cnf) over(partition by user_id order by user_id)/count(cnf) over(partition by user_id order by user_id)
+as cnf_rate  from data1
+)
+
+select s.user_id ,round(cnf_rate,2) from Signups s join data2 d on s.user_id=d.user_id
