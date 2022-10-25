@@ -1,0 +1,9 @@
+with data as (
+select * from Boxes b left join Chests c on b.chest_id=c.chest_id
+)
+
+select b.box_id , sum(case 
+when b.chest_id is Null then b.apple_count else (b.apple_count+c.apple_count) end) as total_apple_count,
+sum(case
+when b.chest_id is Null then b.orange_count else (b.orange_count+c.orange_count)end) as total_orange_count
+from data
