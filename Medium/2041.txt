@@ -1,0 +1,7 @@
+with data as(
+select interview_id,sum(score) over(partition by interview_id order by interview_id) as sum_score
+from Rounds
+)
+
+select c.interview_id from Candidates c join data d on c.interview_id=d.interview_id where 
+(years_of_exp >=2 and sum_score>15)
