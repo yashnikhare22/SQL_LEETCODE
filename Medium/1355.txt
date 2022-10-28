@@ -1,0 +1,5 @@
+with data as (
+select *,count(f.id) over(partition by a.activity order by a.id) as cnt
+from Friends f join Activities a on f.activity_id=a.id )
+
+select a.activity from data where cnt range between (min(cnt)+1) and (max(cnt)-1)
