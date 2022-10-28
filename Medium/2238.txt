@@ -1,0 +1,8 @@
+ with data1 as (
+ select * from Rides R1 left join Rides R2 on R1.driver_id=R2.passenger_id  ),
+ 
+ data2 as (
+ select *, (case when R2.passenger_id is Null then 0 else 1 end ) as cnt from data1 )
+ 
+ select R1.driver_id , sum(cnt) as cnt from data2 group by R1.driver_id
+ 
