@@ -1,0 +1,5 @@
+with data as (
+select *, dense_rank() over(partition by project_id order by experience_years desc) as rnk
+from Projects P join Employee E on P.employee_id=E.employee_id )
+
+select E.employee_id from data where rnk=1
