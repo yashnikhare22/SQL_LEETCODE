@@ -1,0 +1,7 @@
+with data1 as (
+select *, lead(visit_date,1,cast('2021-01-01' as date)) over(partition by user_id order by visit_date) nxt_date from UserVisits
+),
+data2 as (
+select *,(nxt_date-visit_date) as window from data1 )
+
+select user_id , max(window) as max_window from data2 group by user_id order by user_id
