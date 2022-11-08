@@ -1,0 +1,18 @@
+with data1 as (
+select departure_airport as air_id , sum(flights_count) as cnt
+from Flights group by departure_airport
+),
+data2 as ( 
+select arrivial_airport as air_id , sum(flights_count) as cnt
+from Flights group by arrivial_airport
+),
+
+data3 as(
+select air_id, sum(cnt) as cnt_
+data1
+union 
+data2
+group by air_id
+)
+
+select air_id from data3 where cnt_ = (select max(cnt_ from data3)
