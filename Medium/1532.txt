@@ -1,0 +1,9 @@
+with data1 as (
+select * dense_rank() over(partition by customer_id order order_date desc) as rnk by from Orders
+),
+data2 as (
+select * from Customers c join data1 d1 on c.customer_id=d1.customer_id where rnk<4
+)
+
+select customer_name,d1.customer_id,d1.order_id,order_date from data2 order by d1.customer_name,
+d1.customer_id  ,d1.order_date desc
