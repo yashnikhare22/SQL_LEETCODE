@@ -1,0 +1,6 @@
+ with data as ( select * from Users U join Orders O on U.user_id=O.buyer_id
+ )
+ 
+ select distinct(user_id), distinct(join_date),
+ count(order_id) over(partition by user_id order by user_id) as or  from data 
+ where year(join_date)='2019'
