@@ -1,0 +1,10 @@
+with data as (
+select * ,lead(id) over(order by id) as nxt , lag(id) over(order by id) as pre from seat
+)
+
+select case when id%2<>0 and nxt is not NULL then nxt
+when id%2=0 then prev
+else id
+end as id , student
+from data
+order by id
