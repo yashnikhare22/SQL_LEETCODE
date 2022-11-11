@@ -1,0 +1,8 @@
+with data as (
+select * ,dense_rank() over(partition by product_id order by change_date desc) as rnk
+max() over(partition by product_id) as max_date from Products
+)
+
+select product_id , (case when rnk=1 and change_date<=2019-08-16' then new_price 
+else 10 end ) as price
+from data
