@@ -1,0 +1,9 @@
+with data1 as (
+select *,min(order_date) over(partition by customer_id order by customer_id) as min_ord,
+min(customer_pref_delivery_date) over(partition by customer_id order by customer_id) as min_del
+from Delivery ),
+data2 as (
+
+select *, (case when ((min_ord)=(min_del)) then 1 else 0 end ) as cn from data1
+)
+select round(((sum(cn)*1.0/count(cn)*1.0)*100),2) from data2
