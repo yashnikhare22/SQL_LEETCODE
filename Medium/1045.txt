@@ -1,0 +1,5 @@
+with data1 as (
+select customer_id, count(distinct(product_key)) as cnt from Customer group by customer_id),
+data2 as ( select *, count(product_key) c from Product group by product_key)
+
+select customer_id from data1 d1 join data2 d2 on d1.product_key=d2.product_key where cnt=c
