@@ -1,0 +1,7 @@
+with data1 as (
+select * avg(occurences) over(partition by event_type) as avg_oc from Events
+),
+data2 as (
+select *, row_number() over(partition by business_id) as rn from data1)
+
+select business_id from data2 where (rn>1) and (avg_oc < occurences)
