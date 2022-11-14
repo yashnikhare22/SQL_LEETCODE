@@ -1,0 +1,6 @@
+with data as (
+select * , dense_rank() over(partition by product_id order by order_date desc) as rnk from 
+Orders )
+
+select P.product_name,P.product_id,d.order_id,d.order_date from data d join Products P on d.product_id=P.product_id
+where rnk=1  order by product_name,product_id,order_id
