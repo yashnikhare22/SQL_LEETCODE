@@ -1,0 +1,4 @@
+
+select salary as SecondHighestSalary from (
+select * ,row_number() over(order by salary desc) as rn from Employee ) x 
+where x.rn=2
