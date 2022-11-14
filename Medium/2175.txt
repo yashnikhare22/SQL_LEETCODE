@@ -1,0 +1,8 @@
+with data1 as (
+select * from Teampoints T join pointsChange P on T.team_id=P.team_id ),
+data2 as (
+select team_id, row_number() over(order by points desc,name) as intial_rnk
+,row_number() over(order by (points+points_change)desc,name)
+as final_rnk from data1 )
+
+select team_id, name, (intial_rnk-final_rnk) as rank_diff from data2
