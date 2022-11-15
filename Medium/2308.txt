@@ -1,7 +1,7 @@
 with data1 as (
-select task_id,assignee_id, extract(day from submit_date) as 'day' from Tasks  ),
+select task_id,assignee_id, weekday( submit_date) as 'day' from Tasks  ),
 data2 as (
-select task_id,assignee_id, (case when (day='saturday' or day='sunday') then 'weekend' else 'weekday'
+select task_id,assignee_id, (case when (day=5 or day=6) then 'weekend' else 'weekday'
 end ) as W from data1
 
 select sum(case when W='weekend' then 1 else 0 end ) as weekend_cnt,
