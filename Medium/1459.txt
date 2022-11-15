@@ -1,0 +1,5 @@
+with data1 as (
+select P1.id as P1,P2.id as P2 , (abs(P1.x_value-P2.x_value)*abs(P1.y_value-P2.y_value)) as area
+from Points P1 join Points P2 on P1.id<>P2.id
+)
+select * from data1 where area>0 order by area desc,P1,P2
