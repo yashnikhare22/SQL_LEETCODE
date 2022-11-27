@@ -1,0 +1,9 @@
+with data1 as (
+select *, count(employee_id) over(partition by salary) as cnt from Employees ),
+data2 as (
+select * from data1 where cnt>1  )
+
+select employee_id,name,salary, dense_rank() over(order by salary ) as team_id
+from data2
+order by team_id,employee_id
+
