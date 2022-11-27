@@ -1,0 +1,18 @@
+ with data1 as (
+ select v.member_id , count(v.visit_id) over(partition by v.member_id) as cnt_visit,
+ from Visits v left_join Purchases P on v.visit_id=p.visit_id
+ ),
+ data2 as (
+ select *, (case when p.visit_id is Null then 0 else 1 end )as P_visit_cnt
+ from data1 ),
+ data3 as (
+select *,sum(P_visit_cnt) over(partition by member_id) as sum_pvisit from data2 ),
+data4 as (
+select member_id, (100*sum_pvisit)/(cnt_visit) as cat from data3 )
+
+select member_id, name , (case when cat>=80 then 'Diamond'
+when (cat>=50 and cat<80) then 'Gold'
+when cat<50 then 'Silver'
+when cat=0 then 'Bronze
+end ) as category
+from data4 d join Members m on d.member_id=m.member_id
