@@ -1,0 +1,8 @@
+with data1 as (
+select * from Person P join Country C on left(phone_number,3)=country_code join 
+Calls on P.id in (caller_id,callee_id ),
+data2 as (
+select *, avg(duration) over(partition by name) as count_avg, avg(duration) as global_avg
+from data1 )
+
+select name from data2 where count_avg>global_avg
