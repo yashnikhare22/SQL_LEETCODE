@@ -1,0 +1,24 @@
+ with data1 as (
+ select *,count(away_team_id) over(partition by home_team_id) as matches_played from Matches
+ ),
+ data2 as (
+ select *
+ sum(case
+ when home_team_goals>away_team_goals then 3 else 0
+ when home_team_goals=away_team_goals then 1 
+ end ) over(partition by home_team_id) as points 
+ from data1
+ ),
+ data3 as (
+ select host_team_id,away_team_id
+ ,matches_played,points,sum(home_team_goals) over(partiton by home_team_id) as goal_for,
+ sum(away_team_goals) over(partiton by home_team_id) as goal_against,
+ (goal_for-goal_against) as goal_fiff
+ from data2 )
+ select distinct(team_name),matches_played,points,sum(home_team_goals) over(partiton by home_team_id) as goal_for,
+ sum(away_team_goals) over(partiton by home_team_id) as goal_against,
+ (goal_for-goal_against) as goal_fiff
+ from Teams T join data3 d3 on T.team_id=d3.host_team_id
+ 
+ 
+ 
