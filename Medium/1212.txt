@@ -1,0 +1,9 @@
+select team_id, team_name,
+sum(case when host_team=team_id and host_goals>guest_goals then 3
+when guest_team=team_id and host_goals<guest_goals then 3
+when host_team=team_id and host_goals=guest_goals then 1
+when guest_team=team_id and host_goals=guest_goals then 1
+else 0 end) as points
+from Teams t join Matches m on t.team_id in(host_team,guest_team)
+group by team_id
+order by points desc,team_id
