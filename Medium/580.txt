@@ -1,0 +1,5 @@
+with data as (
+select *,count(student_id) over(partition by dept_id) as cnt from Student s join Department d on
+s.dept_id=d.dept_id  )
+
+select dept_name, cnt from data order by cnt desc,dept_name
