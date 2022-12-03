@@ -1,0 +1,15 @@
+ with data1 as (
+ select *,count(user_id) over(partition by user_id) as cnt 
+ from Users u join MovieRating mr on u.user_id=mr.user_id ),
+ data2 as (
+ select name from data1 where cnt=(select max(cnt) from data1) order by name
+ ),
+ data3 as (
+ select *,avg(rating) over(partition by movie_id) as avg_mov_rating
+ from Movies m join MovieRating mr on m.movie_id=mr.movie_id where created_at range 
+ between '01-02-2020' and '29-02-2020'
+ )
+ select name from data2
+ union
+ select title from data3 where avg_mov_rating=(select max(avg_mov_rating) from data3)
+ order by title
