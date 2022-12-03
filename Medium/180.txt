@@ -1,0 +1,6 @@
+select (case when
+num=lead(num) over() and
+num=lead(num,2) over()
+then num 
+end ) as consectiveness
+from Logs
