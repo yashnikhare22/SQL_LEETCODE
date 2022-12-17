@@ -1,0 +1,6 @@
+with data1 as (
+select d.*,id as dept_id,name as dept_name from Employee e join Department d on e.department_id=d.dept_id ),
+data2 as (
+select *,dense_rank() over(partition by department order by Salary desc) as rnk from data1 )
+
+select dept_name,name,salary from data2 where rnk=1
