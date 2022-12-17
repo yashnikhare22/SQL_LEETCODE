@@ -1,0 +1,9 @@
+ create function getNtheHighestSalary (N,int)
+ return int
+ begin return (
+ with  data as (
+ select *,dense_rank() over(partition by salary order by salary desc) as rnk from Employee
+)
+select distinct ifnull(salary,null) from data where rnk=N
+) ;
+end
