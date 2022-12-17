@@ -1,0 +1,6 @@
+with data1 as (
+select candidateId,count(id) as cnt from Vote group by candidateId )
+data2 as (
+select * from Candidate c join data d on c.id=d.candidateId  )
+
+select id from data2 where cnt=(select max(cnt) from data1)
