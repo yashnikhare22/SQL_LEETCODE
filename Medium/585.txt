@@ -1,0 +1,10 @@
+with data1 as (
+select *,count() over(partition by tiv_2015) as cnt from Insurance where cnt>1 ),
+data2 as (
+select * from data1 where (lat,lon) not in (select lat,lon from Insurance group by
+lat,lon having count(pid)>1) )
+
+select round(sum_,2) from (
+select *,sum(tiv_2016) over() as sum_ from data2) x
+limit 1
+
