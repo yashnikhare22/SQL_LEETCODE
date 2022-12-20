@@ -1,0 +1,9 @@
+with data1 as (
+select *, 
+(case when (purchase_date)-lead(purchase_date,1,purchase_date) over(partition by user_id order by purchase_date) 
+<=7 then 1 else 0 end) as cnt
+from Purchase ),
+data2 as (
+select *,sum(cnt) over(partition by user_id) as total_cnt_peruser from data1  )
+
+select distinct(user_id) from data2 where total_cnt_peruser>1 order by user_id
