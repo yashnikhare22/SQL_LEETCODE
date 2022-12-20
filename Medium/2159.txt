@@ -1,0 +1,7 @@
+with data1 as (
+select first_col,row_number() over(order by first_col) as rnk1 from Data
+),
+data2 as (
+select second_col,row_number() over(order by second_col desc) as rnk2 from Data )
+
+select first_col,second_col from data1 d1 join data2 d2 on d1.rnk1=d2.rnk2
