@@ -1,0 +1,11 @@
+with data1 as (
+select *,
+(case when action='show' then 1 else 0 end) as show_num,
+(case when action='answer' then 1 else 0 end) as ans_num,
+from SurveyLog ),
+data2 as(
+select *,(sum(ans_num) over(partition by question_id) / sum(show_num)  over(partition by question_id))
+as rate
+from data1 )
+
+select distinct(question_id) from data2 order by rate desc,question_id asc limit 1
