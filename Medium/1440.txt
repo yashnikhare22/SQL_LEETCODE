@@ -1,0 +1,14 @@
+with data as (
+select * from Variables v1 left join Expressions e on v1.name=e.left_operand left join Variables v2
+on v2.name=e.right_operand  )
+
+select * ,
+case when operator ='>' and v1.name>v2.name then 'true'
+case when operator ='<' and v1.name<v2.name then 'true' 
+case when operator ='=' and v1.name=v2.name then 'true' 
+
+else 'false end as value
+
+
+
+from data
