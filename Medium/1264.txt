@@ -1,0 +1,4 @@
+with data as (
+select * from Friendship f join Likes l on f.user2_id=l.user_id )
+
+select page_id from data where f.user1_id=1
