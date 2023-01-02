@@ -1,0 +1,7 @@
+with data1 as (
+select *,row_number() over() as rn from Points2D ),
+
+data2 as (
+select *,(pow((p1.x-p2.x),2)+pow((p1.y-p2.y),2)) as dist from data1 d1 join data1 d1_ on d1.rn<>d1-rn )
+
+select p1.x,p1.y from data2 where dist=(select min(dist) from data2)
