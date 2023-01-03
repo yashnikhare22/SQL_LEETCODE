@@ -1,0 +1,8 @@
+with data1 as (
+select *,(quantity*price) as total from Sales s join Products p on s.product_id=p.product_id ),
+data2 as (
+select user_id,s.product_id,sum(total) over(partition by s.user_id,product_id) as total_cost from data1),
+data3 as (
+select *,dense_rank() over(partition by s.user_id,s.product_id order by total_cost desc) as rnk from data2
+)
+select user_id,product_id from data3 where rnk=1
