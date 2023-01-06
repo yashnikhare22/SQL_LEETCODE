@@ -1,0 +1,10 @@
+ with recursive data1 as (
+ select 1 as id
+ union
+ select id+1
+ from data
+ where ids<(select max(customer_id from Customers )
+ )
+ 
+ select d1.id from data1 d1 left join Customers C on d1.id = C.customer_id where d1.id is null
+ order by d1.id 
