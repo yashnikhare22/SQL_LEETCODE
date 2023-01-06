@@ -1,0 +1,19 @@
+with data1 as (
+select gold_medal as user,contest_id from Contests 
+union all
+select silver_medal as user,contest_id from Contests 
+union all
+select bronze_medal as user,contest_id from Contests ),
+data2 as (
+select gold_medal as user,count(contest_id)  as cnt from Contests group by user having cnt>2),
+data3 as (
+select 
+(case when abs(contest_id-lead(contest_id,1,contest_id) over(partition by user)) =1 and
+abs(contest_id-lead(contest_id,2,contest_id) over(partition by user)) =2
+then user_id end) as user
+from data1 
+union 
+select user from data2
+)
+
+select name,mail from data3 d3 join Users U d3.user=U.user_id
