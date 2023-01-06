@@ -1,0 +1,14 @@
+with data1 as (
+select u.user_id,credit,(case when t.paid_by is Null then amount =0 else amount end ) as amount
+from Users u left join Transactions t on u.user_id = t.paid_by ),
+paid_by as (
+select u.user_id, user_name,(credit-amount) as paid_by from data1  ),
+data2 as (
+select u.user_id,credit,(case when t.paid_to is Null then amount =0 else amount end ) as amount
+from Users u left join Transactions t on u.user_id = t.paid_to ),
+paid_to as (
+select u.user_id, user_name,(credit+amount) as paid_to from data1  )
+
+select pb.user_id , (case when (paid_to +paid_by)>0 then 'Yes' else 'No' end ) 
+as credit_limit_breached
+from paid_by pb join paid_to pt on pb.user_id=pt.user_id 
