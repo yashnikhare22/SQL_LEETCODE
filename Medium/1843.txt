@@ -1,0 +1,14 @@
+with data1 as (
+select transaction_id,account_id,type,month(day) as month,
+(case when type='Creditor' then amount else (-1*amount) end) as amount
+from Transactions ),
+data2 as (
+select account_id,transaction_id,type,month,sum(amount) over(partition by account_id) as total_amount
+from data1),
+data3 as (
+select a.account_id,transaction_id,max_income,type,month,total_sum from data2 d2 join
+Activity a on d2.account_id=a.account_id where total_sum>max_income ),
+
+select distinct(account_id) from data3 where
+abs(month-lead(month,1,month) over(partition by account_id order by month) )=1 order by transaction_id
+
