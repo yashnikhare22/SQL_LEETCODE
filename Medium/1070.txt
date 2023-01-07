@@ -1,0 +1,9 @@
+with data1 as (
+select *,dense_rank() over(partition by product_id order by year asc) as rnk from Sales ),
+data2 as (
+select product_id,year,sum(quantity) over(partition by product_id) as quantity,
+sum(price) over(partition by product_id) as price
+from data1 where rnk=1 )
+
+
+select * from data2
