@@ -1,0 +1,8 @@
+with data1 as (
+select requester_id as id , count(accepter_id) as cnt from RequestAccepted
+group by requester_id
+union all
+select accepter_id as id , count(requester_id) as cnt from RequestAccepted
+group by accepter_id
+)
+select id,cnt as num from data where cnt=(select max(cnt from data)
