@@ -1,0 +1,12 @@
+with data1 as (
+select *,dense_rank() over(partition by player_id order by event_date) as rnk from Activity
+where rnk=1),
+data2 as (
+select d1.player_id,d.event_date,a.player_id,a.event_date,count(a.player_id) over() as cnt
+from data1 d1 left join Activity a
+on d1.player_id=a.player_id and d1.event_date<>a.event_id ),
+data3 as (
+select count(a.player_id) over() as cnt1,cnt from data2 where daydiff(a.event_date,d1.event_date)=1
+)
+
+select round((cnt1/cnt),2) from data3
