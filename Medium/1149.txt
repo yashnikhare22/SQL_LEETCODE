@@ -1,0 +1,5 @@
+with data as (
+select view_date,viewer_id,article_id,
+distinct(count(article_id)) over(partition by view_date,viewer_id ) as cnt from Views )
+
+select distinct(viewer_id) from data where cnt>1
