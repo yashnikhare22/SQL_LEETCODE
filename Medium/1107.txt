@@ -1,0 +1,6 @@
+with data as (
+select *, dense_rank() over(partition by user_id order by activity_date asc) as rnk from 
+Traffic where activity='login' and acitivity_date between '2019-04-01' and '2019-06-01'
+)
+select activity_date as login_date,count(user_id) as user_count as cnt 
+from data group by activity_date having rnk=1
