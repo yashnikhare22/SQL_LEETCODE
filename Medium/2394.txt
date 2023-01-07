@@ -1,0 +1,6 @@
+ with data1 as(
+ select *,sum(ceil(timestampdiff(second,in_time,out_time)/60)) as diff_time
+ from Logs group by employee_id )
+ 
+ select e.employee_id from employee_id e left join data d on e.employee_id=d.employee_id 
+ where (needed_hours*60)>ifnull(diff_time,0)
