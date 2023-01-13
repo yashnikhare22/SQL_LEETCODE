@@ -1,0 +1,4 @@
+with data as(
+select c1.id,c1.name,c1.referee_id,c2.id,c2.name,c2.referee_id from Customer c1 left join 
+Customer c2 in c1.id=c2.referee_id )
+select c1.id from data where referee_id<>2 or referee_id is Null
