@@ -1,0 +1,6 @@
+with data1 as (
+select *,count(order_number) over(partition by customer_number) as cnt from Orders ),
+data2 as(
+select *,dense_rank() over(order by cnt) as rnk from data1 )
+
+select distinct(customer_number) from data2 where rnk=1
