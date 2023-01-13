@@ -1,0 +1,4 @@
+with data as (
+select e1.*,e2.id,e2.name,e2.salary,e2.managerID from Employee e1 left join Employee e2 on 
+e1.managerId=e2.id )
+select e1.name from data where e1.salary>e2.salary
