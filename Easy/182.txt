@@ -1,0 +1,4 @@
+with data as (
+select *,row_number() over(partition by email) as rn from Person )
+
+select email from data where rn=2
