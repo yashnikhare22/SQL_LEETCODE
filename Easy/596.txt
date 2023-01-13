@@ -1,0 +1,4 @@
+with data as (
+select *,count(student) over(partition by class ) as cnt from Courses )
+
+select class from data where cnt>=5
