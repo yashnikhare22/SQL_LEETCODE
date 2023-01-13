@@ -1,0 +1,9 @@
+with data1 as (
+select name,
+case when b.empId is null then 0 else bonus end as bonus
+from Employee e left join Bonus b on e.empId=b.empId ),
+data2 as (
+select name,bonus from data where bonus<1000 ),
+
+select name,
+case when bonus =0 then null else bonus end as bonus from data2
