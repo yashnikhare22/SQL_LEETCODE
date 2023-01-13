@@ -1,0 +1,5 @@
+
+select case 
+when (free=1 and lead(free) over(order by seat_id) =1 )or
+(free=1 and lag(free) over(order by seat_id)=1) then seat_id
+from Cinema
