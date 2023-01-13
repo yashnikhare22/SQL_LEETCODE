@@ -1,0 +1,5 @@
+with data as (
+select c.id as person_id,name,o.id as order_id,customer_id from Customers c left join Orders o on 
+c.person_id=o.customer_id  )
+
+select person_id,name from data where order_id is null
