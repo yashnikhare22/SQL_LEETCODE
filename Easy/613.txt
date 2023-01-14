@@ -1,0 +1,4 @@
+with data1 as (
+select p1.x as x,p2.x as y from Points p1 join Points p2 on p1.x<>p2.x ),
+data2 as (
+select ((x-y)*(x-y)) as dist from data1 order by dist limit 1
