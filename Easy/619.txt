@@ -1,0 +1,5 @@
+with data1 as(
+select num,row_number() over(partition by num) as rn from MyNumbers)
+
+select ifnull(num,'Null') as nums from data1 where rn=1
+
