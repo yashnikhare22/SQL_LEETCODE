@@ -1,0 +1,4 @@
+with data as (
+select * from Actions where action_date='2019-07-04' and action='report' and extra is not Null )
+
+select extra, count(user_id) as number from data group by extra
