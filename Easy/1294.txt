@@ -1,0 +1,11 @@
+with data as (
+select *,avg(whether_state) as avg_temp from Countries c join Weather w on c.country_id=w.country_id
+group by country_id
+having day between '2019-11-01' and '2019-11-30' )
+
+select country_name, (case 
+when avg_tem<=15 then 'Cold',
+when avg_temp>= then 'Hot'
+else 'Warm end ) as weather_type
+from data
+           
