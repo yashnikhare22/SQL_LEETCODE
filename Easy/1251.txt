@@ -1,0 +1,10 @@
+with data1 as (
+select sub_id,distinct(count(sub_id)) as cnt from Submissions group by parent_id ),
+data2 as (
+select * from Submissions where parent_id is Null ),
+data3 as (
+select d2.sub_id,d1.sub_id,cnt from data2 d2 left join data1 d1 ),
+data4 as (
+select * , (case when d1.sub_id is Null then 0 else cnt end ) as cnt1 from data3 )
+
+select distinct(d1.sub_id) , cnt1 from data4
