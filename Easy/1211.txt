@@ -1,0 +1,7 @@
+with data as (
+select *, (position/rating) as queries,
+(case when rating<3 the 1 else 0 end) as poor_rating
+from Queries )
+
+select distinct(query_name),round(avg(queries),2) as quality,round(((sum(poor_rating)/count(poor_rating))*100),2)
+as poor_query_percentage from data group by query_name
