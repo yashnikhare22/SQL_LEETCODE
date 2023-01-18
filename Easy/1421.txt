@@ -1,0 +1,5 @@
+with data as (
+select * from Queries q left join NPV n on q.id=n.id and q.year=n.year )
+
+select q.id,q.year, (case when n.year is Null then 0 else npv end) as npv
+from data
