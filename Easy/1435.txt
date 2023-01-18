@@ -1,0 +1,26 @@
+ with data as (
+ select (case 
+ when (duration/60) between 0 and 5 then 1 else 0 end as )'[0-5]',
+ (case 
+ when (duration/60) between 6 and 10 then 1 else 0 end as )'[6-10]',
+ (case 
+ when (duration/60) between 11 and 15 then 1 else 0 end as )'[11-15]',
+ (case 
+ when (duration/60) >15 then 1 else 0 end as )'[15-above]'
+ from Sessions  )
+ data2 as (
+ select '[0-5]' as bin 
+ sum([0-5]) as total from data
+ union 
+  select '[6-10]' as bin 
+ sum([6-10]) as total from data
+ union
+  select '[10-15]' as bin 
+ sum([10-15]) as total from data
+ union
+  select '[15-above]' as bin 
+ sum([15-above]) as total from data
+ )
+ select bin, total from data2
+ 
+ 
