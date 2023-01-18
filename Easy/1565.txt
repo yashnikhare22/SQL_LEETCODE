@@ -1,0 +1,3 @@
+select year(order_date),month(order_date) as mnt,
+distinct(count(customer_id)) as cust,distinct(count(order_id)) as orders
+from Orders group by year(order_date),month(order_date) having invoice>20
