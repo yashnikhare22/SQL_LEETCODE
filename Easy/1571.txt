@@ -1,0 +1,5 @@
+with data as (
+select name,w.product_id,(Width*Length*Height)*(units) as tot_vol
+from Warehouse w join Products p on w.product_id=p.product_id )
+
+select name,sum(tot_vol) as total_volume from data groupby name
