@@ -1,0 +1,6 @@
+with data as (
+select emp_id,event_day,sum(out_time-in_time) over(partition by emp_id,event_day) as total_time ,
+row_number() over(partition by emp_id,event_day) as rn from
+Employees )
+
+select day,emp_id,total_time from data where rn=1
