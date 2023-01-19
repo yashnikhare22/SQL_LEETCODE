@@ -1,0 +1,8 @@
+with data as (
+select date_id,make_name,
+distinct(count(lead_id)) over(partition by date_id,make_name order by date_id) as cnt_lead,
+distinct(count(partner_id)) over(partition by date_id,make_name order by date_id) as cnt_partner
+row_number() over(partition by date_id,make_name order by date_id) as rn
+from DailySales )
+
+select date_d,make_name,cnt_lead,cnt_partner from data where rn=1
