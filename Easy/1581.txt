@@ -1,0 +1,8 @@
+with data as (
+select *,case 
+when t.visit_id is Null then 1 else 0 end as cnt
+from Visits v left join Transactions t on v.visit_id=t.visit_id )
+
+select (customer_id),count(cnt)  as cnt_ from
+data where v.visit_id is Null
+group by customer_id
