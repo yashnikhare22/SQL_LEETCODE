@@ -1,0 +1,4 @@
+with data as (
+select e.*,salary from Employees e full outer join Salaries s on e.employee_id=s.employee_id )
+
+select employee_id from data where name is NULL or salary is NULL
