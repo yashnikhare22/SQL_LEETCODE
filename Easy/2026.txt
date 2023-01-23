@@ -1,0 +1,4 @@
+with data as (
+select *,(dislikes/(likes+dislikes))*100 as percentages from Problems )
+
+select problem_id as low_quality_problems from data where percentages<60
