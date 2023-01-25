@@ -1,0 +1,12 @@
+with data as (
+select product_id,'store1' as store,store1 as Price from Products
+union all
+select product_id,'store2' as store,store2 as Price from Products
+union all
+select product_id,'store3' as store  as Price from Products
+),
+data2 as (
+select *,dense_rank() over(partition by product_id order by Price asc) as rnk
+from product where store is not Null)
+
+select product_id,store,price from data
