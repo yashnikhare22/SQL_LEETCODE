@@ -1,3 +1,3 @@
 # SQL_LEETCODE
 
-SQL Interview Questions
+SQL Interview Solutions
